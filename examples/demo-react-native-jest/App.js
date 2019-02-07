@@ -4,14 +4,16 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity
+  TouchableOpacity,
+  DatePickerIOS  
 } from 'react-native';
 
 export default class example extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      greeting: undefined
+      greeting: undefined,
+      date: new Date()
     };
   }
   render() {
@@ -32,9 +34,31 @@ export default class example extends Component {
   }
   renderAfterButton() {
     return (
-      <View style={{flex: 1, paddingTop: 20, justifyContent: 'center', alignItems: 'center'}}>
-        <Text style={{fontSize: 25}}>
-          {this.state.greeting}!!!
+      <View>
+        <View style={{flex: 1, paddingTop: 20, justifyContent: 'center', alignItems: 'center'}}>
+          <Text style={{fontSize: 25}}>
+            {this.state.greeting}!!!
+          </Text>
+        </View>
+        <DatePickerIOS
+          date={this.state.date}
+          mode={'datetime'}
+          onDateChange={(newDate) => this.setState({ date: newDate })}
+        />
+        <Text testID="selected_month">
+          {(this.state.date.getMonth() + 1).toString()}
+        </Text>
+        <Text testID="selected_day">
+          {this.state.date.getDate().toString()}
+        </Text>
+        <Text testID="selected_year">
+          {this.state.date.getFullYear().toString()}
+        </Text>
+        <Text testID="selected_hours">
+          {this.state.date.getHours().toString()}
+        </Text>
+        <Text testID="selected_minutes">
+          {this.state.date.getMinutes().toString()}
         </Text>
       </View>
     );

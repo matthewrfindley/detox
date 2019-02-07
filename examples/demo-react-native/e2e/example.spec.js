@@ -16,4 +16,16 @@ describe('Example', () => {
     await element(by.id('world_button')).tap();
     await expect(element(by.text('World!!!'))).toBeVisible();
   });
+
+  it('should select the correct date', async () => {
+    await element(by.id('world_button')).tap();
+
+    
+    await element(by.type('UIPickerView')).setColumnToValue(0, 'Feb 7')
+    await element(by.type('UIPickerView')).setColumnToValue(2, '10')
+    await element(by.type('UIPickerView')).setColumnToValue(1, '5')
+    await element(by.type('UIPickerView')).setColumnToValue(3, 'AM')
+    
+    await expect(element(by.id('selected_date').and(by.text('Foo')))).toBeVisible();
+  });  
 });

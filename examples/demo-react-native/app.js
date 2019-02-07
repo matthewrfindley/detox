@@ -10,14 +10,16 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity
+  TouchableOpacity,
+  DatePickerIOS
 } from 'react-native';
 
 class example extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      greeting: undefined
+      greeting: undefined,
+      date: new Date()
     };
   }
   render() {
@@ -38,9 +40,19 @@ class example extends Component {
   }
   renderAfterButton() {
     return (
-      <View style={{flex: 1, paddingTop: 20, justifyContent: 'center', alignItems: 'center'}}>
-        <Text style={{fontSize: 25}}>
-          {this.state.greeting}!!!
+      <View>
+        <View style={{flex: 1, paddingTop: 20, justifyContent: 'center', alignItems: 'center'}}>
+          <Text style={{fontSize: 25}}>
+            {this.state.greeting}!!!
+          </Text>
+        </View>
+        <DatePickerIOS
+          date={this.state.date}
+          mode={'datetime'}
+          onDateChange={(newDate) => this.setState({ date: newDate })}
+        />
+        <Text testID="selected_date">
+          {this.state.date}
         </Text>
       </View>
     );
