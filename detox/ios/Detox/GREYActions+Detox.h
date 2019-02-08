@@ -10,5 +10,7 @@
 #import <EarlGrey/EarlGrey.h>
 
 @interface GREYActions (Detox)
-	+ (id<GREYAction>)detoxSetDatePickerDateIOSOnly:(NSString *)dateString withFormat:(NSString *)dateFormat;
+
++ (id<GREYAction>)detoxSetDatePickerDateIOSOnly:(NSString *)dateString withFormat:(NSString *)dateFormat;
+
 @end

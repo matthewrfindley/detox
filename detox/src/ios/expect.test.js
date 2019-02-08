@@ -34,7 +34,8 @@ describe('expect', async () => {
 
   it(`element by type`, async () => {
     await e.expect(e.element(e.by.type('test'))).toBeVisible();
-    await e.element(e.by.type('UIPickerView')).setColumnToValue(1,"6");
+    await e.element(e.by.type('UIPickerView')).setColumnToValue(1, '6');
+    await e.element(e.by.type('UIPickerView')).setDatePickerDateIOSOnly('2019-2-8T05:10:00-08:00', "yyyy-MM-dd'T'HH:mm:ssZZZZZ");
   });
 
   it(`element by traits`, async () => {
@@ -52,8 +53,8 @@ describe('expect', async () => {
   });
 
   it(`expect with wrong parameters should throw`, async () => {
-     await expectToThrow(() => e.expect('notAnElement'));
-     await expectToThrow(() => e.expect(e.element('notAMatcher')));
+    await expectToThrow(() => e.expect('notAnElement'));
+    await expectToThrow(() => e.expect(e.element('notAMatcher')));
   });
 
   it(`matchers with wrong parameters should throw`, async () => {
@@ -70,27 +71,57 @@ describe('expect', async () => {
   });
 
   it(`waitFor (element)`, async () => {
-    await e.waitFor(e.element(e.by.id('id'))).toExist().withTimeout(0);
+    await e
+      .waitFor(e.element(e.by.id('id')))
+      .toExist()
+      .withTimeout(0);
     await e.waitFor(e.element(e.by.id('id'))).toBeVisible();
     await e.waitFor(e.element(e.by.id('id'))).toBeNotVisible();
     await e.waitFor(e.element(e.by.id('id'))).toExist();
-    await e.waitFor(e.element(e.by.id('id'))).toExist().withTimeout(0);
-    await e.waitFor(e.element(e.by.id('id'))).toNotExist().withTimeout(0);
+    await e
+      .waitFor(e.element(e.by.id('id')))
+      .toExist()
+      .withTimeout(0);
+    await e
+      .waitFor(e.element(e.by.id('id')))
+      .toNotExist()
+      .withTimeout(0);
     await e.waitFor(e.element(e.by.id('id'))).toHaveText('text');
     await e.waitFor(e.element(e.by.id('id'))).toHaveValue('value');
     await e.waitFor(e.element(e.by.id('id'))).toNotHaveValue('value');
 
-
-
-    await e.waitFor(e.element(e.by.id('id'))).toBeVisible().whileElement(e.by.id('id2')).scroll(50, 'down');
-    await e.waitFor(e.element(e.by.id('id'))).toBeVisible().whileElement(e.by.id('id2')).scroll(50);
+    await e
+      .waitFor(e.element(e.by.id('id')))
+      .toBeVisible()
+      .whileElement(e.by.id('id2'))
+      .scroll(50, 'down');
+    await e
+      .waitFor(e.element(e.by.id('id')))
+      .toBeVisible()
+      .whileElement(e.by.id('id2'))
+      .scroll(50);
   });
 
   it(`waitFor (element) with wrong parameters should throw`, async () => {
-     await expectToThrow(() => e.waitFor('notAnElement'));
-     await expectToThrow(() => e.waitFor(e.element(e.by.id('id'))).toExist().withTimeout('notANumber'));
-     await expectToThrow(() => e.waitFor(e.element(e.by.id('id'))).toExist().withTimeout(-1));
-     await expectToThrow(() => e.waitFor(e.element(e.by.id('id'))).toBeVisible().whileElement('notAnElement'));
+    await expectToThrow(() => e.waitFor('notAnElement'));
+    await expectToThrow(() =>
+      e
+        .waitFor(e.element(e.by.id('id')))
+        .toExist()
+        .withTimeout('notANumber')
+    );
+    await expectToThrow(() =>
+      e
+        .waitFor(e.element(e.by.id('id')))
+        .toExist()
+        .withTimeout(-1)
+    );
+    await expectToThrow(() =>
+      e
+        .waitFor(e.element(e.by.id('id')))
+        .toBeVisible()
+        .whileElement('notAnElement')
+    );
   });
 
   it(`waitFor (element) with non-elements should throw`, async () => {
@@ -99,7 +130,7 @@ describe('expect', async () => {
 
   it(`interactions`, async () => {
     await e.element(e.by.label('Tap Me')).tap();
-    await e.element(e.by.label('Tap Me')).tapAtPoint({x: 10, y:10});
+    await e.element(e.by.label('Tap Me')).tapAtPoint({ x: 10, y: 10 });
     await e.element(e.by.label('Tap Me')).longPress();
     await e.element(e.by.label('Tap Me')).longPress(2000);
     await e.element(e.by.id('UniqueId819')).multiTap(3);
@@ -152,6 +183,8 @@ describe('expect', async () => {
     await expectToThrow(() => e.element(e.by.id('ScrollView799')).swipe('down', 'NotFastNorSlow'));
     await expectToThrow(() => e.element(e.by.id('ScrollView799')).swipe('down', 'NotFastNorSlow', 0.9));
     await expectToThrow(() => e.element(e.by.id('ScrollView799')).atIndex('NaN'));
+    await expectToThrow(() => e.element(e.by.type('UIPickerView')).setDatePickerDateIOSOnly(0, 'mm'));
+    await expectToThrow(() => e.element(e.by.type('UIPickerView')).setDatePickerDateIOSOnly('something', 0));
   });
 
   it(`exportGlobals() should export api functions`, async () => {
@@ -204,6 +237,6 @@ class MockExecutor {
   }
 
   async timeout(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 }

@@ -15,6 +15,7 @@ const GreyActions = require('./earlgreyapi/GREYActions');
 const GreyInteraction = require('./earlgreyapi/GREYInteraction');
 const GreyCondition = require('./earlgreyapi/GREYCondition');
 const GreyConditionDetox = require('./earlgreyapi/GREYConditionDetox');
+const GreyActionsDetox = require('./earlgreyapi/GREYActions+Detox');
 
 let invocationManager;
 
@@ -191,7 +192,7 @@ class ScrollColumnToValue extends Action {
 class SetDatePickerDate extends Action {
   constructor(dateString, dateFormat) {
     super();
-    this._call = invoke.callDirectly(GreyActions.actionForSetDatePickerDateIOSOnly(dateString, dateFormat));
+    this._call = invoke.callDirectly(GreyActionsDetox.detoxSetDatePickerDateIOSOnlyWithFormat(dateString, dateFormat));
   }
 }
 
