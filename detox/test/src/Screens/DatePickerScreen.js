@@ -20,7 +20,7 @@ export default class DatePickerScreen extends Component {
     minutes = this.state.chosenDate.getMinutes();
     hour = this.state.chosenDate.getHours();
     year = this.state.chosenDate.getFullYear();
-    month = this.state.chosenDate.getMonth();
+    month = this.state.chosenDate.getMonth() + 1;
     day = this.state.chosenDate.getDate();
     if (hour > 12) {
       hour = hour - 12;
